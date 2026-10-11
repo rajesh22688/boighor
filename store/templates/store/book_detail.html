@@ -1,0 +1,223 @@
+{% extends "store/base.html" %}
+
+{% block title %}{{ book.title }} - Boighor{% endblock %}
+
+{% block content %}
+
+<div class="book-detail-page">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="{% url 'home' %}">Home</a>
+        <span>/</span>
+        <a href="{% url 'books' %}">Books</a>
+        <span>/</span>
+        <span>{{ book.title }}</span>
+    </div>
+
+
+    <!-- Book Details -->
+    <section class="book-detail-container">
+
+        <!-- Book Image -->
+        <div class="book-detail-image">
+
+            {% if book.image %}
+                <img src="{{ book.image.url }}" alt="{{ book.title }}">
+            {% else %}
+                <div class="no-book-image">
+                    No Image Available
+                </div>
+            {% endif %}
+
+        </div>
+
+
+        <!-- Book Information -->
+        <div class="book-detail-info">
+
+            <p class="book-detail-category">
+                {{ book.category.name }}
+            </p>
+
+            <h1>{{ book.title }}</h1>
+
+            <p class="book-detail-author">
+                by <strong>{{ book.author }}</strong>
+            </p>
+
+
+            <!-- Rating -->
+            <div class="book-rating">
+                <span>★★★★★</span>
+                <span class="rating-text">4.5 / 5</span>
+            </div>
+
+
+            <!-- Price -->
+            <div class="book-detail-price">
+                ₹{{ book.price }}
+            </div>
+
+
+            <!-- Delivery -->
+            <div class="delivery-info">
+                <strong>✓ Free Delivery</strong>
+                <span>Usually delivered within 3–5 days</span>
+            </div>
+
+
+            <!-- Stock -->
+            <div class="stock-info">
+                ✓ In Stock
+            </div>
+
+
+            <!-- Book Information -->
+            <div class="book-information">
+
+                <div>
+                    <strong>Author:</strong>
+                    <span>{{ book.author }}</span>
+                </div>
+
+                <div>
+                    <strong>Publisher:</strong>
+                    <span>{{ book.publisher|default:"Not available" }}</span>
+                </div>
+
+                <div>
+                    <strong>Pages:</strong>
+                    <span>{{ book.pages|default:"Not available" }}</span>
+                </div>
+
+                <div>
+                    <strong>ISBN:</strong>
+                    <span>{{ book.isbn }}</span>
+                </div>
+
+                <div>
+                    <strong>Language:</strong>
+                    <span>{{ book.language }}</span>
+                </div>
+
+            </div>
+
+
+            <!-- Description -->
+            <div class="book-description">
+
+                <h3>About This Book</h3>
+
+                <p>
+                    {{ book.description }}
+                </p>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="book-actions">
+
+                <a href="{% url 'add_to_cart' book.id %}" class="add-cart-btn">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                Add to Cart
+                </a>
+
+                <a
+                    href="{% url 'buy_now' book.id %}"
+                    class="buy-now-btn"
+                >
+                    Buy Now
+                </a>
+                <a
+                    href="{% url 'add_to_wishlist' book.id %}"
+                    class="wishlist-btn">
+                    <i class="fa-regular fa-heart"></i>
+                    Wishlist
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Recommended Books -->
+    <section class="recommended-section">
+
+        <div class="section-heading">
+            <h2>Recommended for You</h2>
+
+            <p>
+                More books from {{ book.category.name }}
+            </p>
+        </div>
+
+
+        <div class="recommended-grid">
+
+            {% for recommended_book in recommended_books %}
+
+            <div class="recommended-card">
+
+                <a href="{% url 'book_detail' recommended_book.id %}">
+
+                    {% if recommended_book.image %}
+
+                        <img
+                            src="{{ recommended_book.image.url }}"
+                            alt="{{ recommended_book.title }}"
+                        >
+
+                    {% else %}
+
+                        <div class="recommended-no-image">
+                            No Image
+                        </div>
+
+                    {% endif %}
+
+                </a>
+
+
+                <div class="recommended-content">
+
+                    <span class="recommended-category">
+                        {{ recommended_book.category.name }}
+                    </span>
+
+                    <h3>
+                        <a href="{% url 'book_detail' recommended_book.id %}">
+                            {{ recommended_book.title }}
+                        </a>
+                    </h3>
+
+                    <p>
+                        {{ recommended_book.author }}
+                    </p>
+
+                    <strong>
+                        ₹{{ recommended_book.price }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+                <p class="no-recommended">
+                    No recommended books available.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

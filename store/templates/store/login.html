@@ -1,0 +1,66 @@
+{% extends "store/base.html" %}
+
+{% block title %}Login - Boighor{% endblock %}
+
+{% block content %}
+
+<div class="auth-page">
+
+    <div class="auth-box">
+
+        <h1>Welcome Back</h1>
+
+        <p class="auth-subtitle">
+            Login to your Boighor account.
+        </p>
+
+        {% if error %}
+            <div class="auth-error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <label>Username</label>
+
+            <input
+                type="text"
+                name="username"
+                placeholder="Enter username"
+                required
+            >
+
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter password"
+                required
+            >
+
+
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+
+        <p class="auth-bottom">
+            Don't have an account?
+
+            <a href="{% url 'register' %}">
+                Create Account
+            </a>
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "store/base.html" %}
+
+{% block title %}Payment - Boighor{% endblock %}
+
+{% block content %}
+
+<div class="payment-page">
+
+    <div class="payment-box">
+
+        <h1>Complete Payment</h1>
+
+        <p>
+            Order #{{ order.id }}
+        </p>
+
+        <div class="payment-amount">
+            ₹{{ order.total_amount }}
+        </div>
+
+        <button
+            id="rzp-button"
+            class="pay-now-btn"
+        >
+            Pay Now
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+
+    const options = {
+
+        key: "{{ razorpay_key }}",
+
+        amount: "{{ amount }}",
+
+        currency: "INR",
+
+        name: "Boighor",
+
+        description: "Book Purchase",
+
+        order_id: "{{ razorpay_order.id }}",
+
+        handler: function (response) {
+
+            window.location.href =
+                "/payment-success/"
+                + "?order_id={{ order.id }}"
+                + "&payment_id="
+                + response.razorpay_payment_id
+                + "&razorpay_order_id="
+                + response.razorpay_order_id
+                + "&razorpay_signature="
+                + response.razorpay_signature;
+
+        },
+
+        theme: {
+            color: "#7b4b2a"
+        }
+
+    };
+
+
+    const razorpay = new Razorpay(options);
+
+    document.getElementById("rzp-button").onclick =
+        function(e) {
+
+            razorpay.open();
+
+            e.preventDefault();
+
+        };
+
+</script>
+
+{% endblock %}

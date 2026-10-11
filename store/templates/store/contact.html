@@ -1,0 +1,274 @@
+{% extends "store/base.html" %}
+
+{% block title %}Contact Us - Boighor{% endblock %}
+
+{% block content %}
+
+<div class="contact-page">
+
+    <!-- Header -->
+
+    <div class="contact-header">
+
+        <span>GET IN TOUCH</span>
+
+        <h1>Contact Us</h1>
+
+        <p>
+            Have a question about a book, order, payment, or anything
+            else? We'd love to hear from you.
+        </p>
+
+    </div>
+
+
+    <!-- Contact Layout -->
+
+    <div class="contact-layout">
+
+
+        <!-- Contact Information -->
+
+        <div class="contact-info">
+
+            <h2>Let's Talk</h2>
+
+            <p>
+                Our team is here to help you with your bookstore
+                experience.
+            </p>
+
+
+            <!-- Email -->
+
+            <div class="contact-info-item">
+
+                <div class="contact-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+
+                <div>
+                    <h3>Email</h3>
+
+                    <p>
+                    boighor@gmail.com
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- Phone -->
+
+            <div class="contact-info-item">
+
+                <div class="contact-icon">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+
+                <div>
+                    <h3>Phone</h3>
+
+                    <p>
+                        +91 1234567890
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- Address -->
+
+            <div class="contact-info-item">
+
+                <div class="contact-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+
+                <div>
+                    <h3>Address</h3>
+
+                    <p>
+                        Boighor Bookstore<br>
+                        West Bengal, India
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- Working Hours -->
+
+            <div class="contact-info-item">
+
+                <div class="contact-icon">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+
+                <div>
+                    <h3>Working Hours</h3>
+
+                    <p>
+                        Monday – Saturday<br>
+                        9:00 AM – 7:00 PM
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- Social -->
+
+            <div class="contact-social">
+
+                <h3>Follow Us</h3>
+
+                <div>
+
+                    <a href="#">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-twitter"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Contact Form -->
+
+        <div class="contact-form-container">
+
+            <h2>Send Us a Message</h2>
+
+            <p>
+                Fill out the form and we'll get back to you.
+            </p>
+
+
+            {% if success %}
+
+                <div class="contact-success">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    <div>
+                        <strong>Message sent successfully!</strong>
+
+                        <p>
+                            Thank you for contacting Boighor.
+                            We'll get back to you soon.
+                        </p>
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <div class="contact-form-row">
+
+                    <div class="contact-field">
+
+                        <label for="name">
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="contact-field">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="contact-field">
+
+                    <label for="subject">
+                        Subject
+                    </label>
+
+                    <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        placeholder="What is your message about?"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="contact-field">
+
+                    <label for="message">
+                        Message
+                    </label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="7"
+                        placeholder="Write your message here..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="contact-submit"
+                >
+
+                    <i class="fa-solid fa-paper-plane"></i>
+
+                    Send Message
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

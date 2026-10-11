@@ -1,0 +1,109 @@
+{% extends "store/base.html" %}
+
+{% block title %}Checkout - Boighor{% endblock %}
+
+{% block content %}
+
+<div class="checkout-page">
+
+    <div class="checkout-header">
+        <h1>Checkout</h1>
+        <p>Review your order before placing it.</p>
+    </div>
+
+
+    <div class="checkout-layout">
+
+        <!-- Order Items -->
+
+        <div class="checkout-items">
+
+            <h2>Your Order</h2>
+
+            {% for item in cart_items %}
+
+            <div class="checkout-item">
+
+                {% if item.book.image %}
+
+                    <img
+                        src="{{ item.book.image.url }}"
+                        alt="{{ item.book.title }}"
+                    >
+
+                {% else %}
+
+                    <div class="checkout-no-image">
+                        No Image
+                    </div>
+
+                {% endif %}
+
+
+                <div class="checkout-book-info">
+
+                    <h3>{{ item.book.title }}</h3>
+
+                    <p>{{ item.book.author }}</p>
+
+                    <span>
+                        Quantity: {{ item.quantity }}
+                    </span>
+
+                </div>
+
+
+                <strong>
+                    ₹{% widthratio item.book.price 1 item.quantity %}
+                </strong>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- Order Summary -->
+
+        <div class="checkout-summary">
+
+            <h2>Order Summary</h2>
+
+            <div class="checkout-row">
+                <span>Subtotal</span>
+                <span>₹{{ total_amount }}</span>
+            </div>
+
+            <div class="checkout-row">
+                <span>Delivery</span>
+                <span class="free-text">FREE</span>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="checkout-total">
+                <span>Total</span>
+                <strong>₹{{ total_amount }}</strong>
+            </div>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+            <button
+                type="submit"
+                class="place-order-btn">
+                Continue to Payment
+            </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

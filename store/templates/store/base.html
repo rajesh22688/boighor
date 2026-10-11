@@ -1,0 +1,303 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+            Boighor - Online Book Store
+        {% endblock %}
+    </title>
+
+    <link rel="stylesheet"
+          href="{% static 'store/css/style.css' %}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    {% block extra_css %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+
+        <!-- LOGO -->
+
+        <a href="{% url 'home' %}"
+           class="logo">
+
+            <i class="fa-solid fa-book-open"></i>
+
+            <span>Boighor</span>
+
+        </a>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="main-nav">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'books' %}">
+                Books
+            </a>
+
+            <a href="{% url 'categories' %}">
+                Categories
+            </a>
+
+            <a href="{% url 'contact' %}">
+                Contact
+            </a>
+
+        </nav>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="nav-actions">
+
+
+            <!-- SEARCH -->
+
+            <a href="{% url 'books' %}"
+               class="nav-icon"
+               title="Search">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+            </a>
+
+
+            <!-- WISHLIST -->
+
+            <a href="{% url 'wishlist' %}"
+               class="nav-icon"
+               title="Wishlist">
+
+                <i class="fa-regular fa-heart"></i>
+
+            </a>
+
+
+            <!-- CART -->
+
+            <a href="{% url 'cart' %}"
+               class="nav-icon"
+               title="Cart">
+
+                <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+
+
+            <!-- USER -->
+
+            {% if user.is_authenticated %}
+
+    <a href="{% url 'orders' %}" class="account-link">
+        <i class="fa-solid fa-box"></i>
+        <span>Orders</span>
+    </a>
+
+    <a href="{% url 'logout' %}" class="account-link">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+    </a>
+
+{% else %}
+
+    <a href="{% url 'login' %}" class="account-link">
+        <i class="fa-regular fa-user"></i>
+        <span>Login</span>
+    </a>
+
+    <a href="{% url 'register' %}" class="account-link">
+        <i class="fa-solid fa-user-plus"></i>
+        <span>Register</span>
+    </a>
+
+{% endif %}
+
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+
+        <!-- ABOUT -->
+
+        <div class="footer-column">
+
+            <div class="footer-logo">
+
+                <i class="fa-solid fa-book-open"></i>
+
+                Boighor
+
+            </div>
+
+            <p>
+
+                Your trusted online bookstore for
+                discovering books you'll love.
+
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+
+        <div class="footer-column">
+
+            <h3>Quick Links</h3>
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'books' %}">
+                Books
+            </a>
+
+            <a href="{% url 'categories' %}">
+                Categories
+            </a>
+
+            <a href="{% url 'contact' %}">
+                Contact
+            </a>
+
+        </div>
+
+
+        <!-- CUSTOMER SERVICE -->
+
+        <div class="footer-column">
+
+            <h3>Customer Service</h3>
+
+            <a href="#">
+                My Orders
+            </a>
+
+            <a href="#">
+                Shipping Information
+            </a>
+
+            <a href="#">
+                Return Policy
+            </a>
+
+            <a href="#">
+                Privacy Policy
+            </a>
+
+        </div>
+
+
+        <!-- CONTACT -->
+
+        <div class="footer-column">
+
+            <h3>Contact Us</h3>
+
+            <p>
+                <i class="fa-solid fa-location-dot"></i>
+                India
+            </p>
+
+            <p>
+                <i class="fa-solid fa-phone"></i>
+                +91 1234567890
+            </p>
+
+            <p>
+                <i class="fa-solid fa-envelope"></i>
+                boighor@gmail.com
+            </p>
+
+
+            <div class="social-icons">
+
+                <a href="#">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+
+                <a href="#">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+
+                <a href="#">
+                    <i class="fa-brands fa-x-twitter"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COPYRIGHT -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 Boighor.
+            All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="{% static 'store/js/main.js' %}">
+</script>
+
+{% block extra_js %}
+{% endblock %}
+
+</body>
+
+</html>

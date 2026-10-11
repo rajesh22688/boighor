@@ -1,0 +1,131 @@
+{% extends "store/base.html" %}
+
+{% block title %}My Orders - Boighor{% endblock %}
+
+{% block content %}
+
+<div class="orders-page">
+
+    <div class="orders-header">
+        <h1>My Orders</h1>
+        <p>View your previous book orders.</p>
+    </div>
+
+
+    {% if orders %}
+
+        {% for order in orders %}
+
+        <div class="order-card">
+
+            <!-- Order Header -->
+
+            <div class="order-header">
+
+                <div>
+                    <strong>Order #{{ order.id }}</strong>
+
+                    <span>
+                        {{ order.created_at|date:"d M Y, h:i A" }}
+                    </span>
+                </div>
+
+                <div class="order-status {{ order.status|lower }}">
+                    {{ order.status }}
+                </div>
+
+            </div>
+
+
+            <!-- Ordered Books -->
+
+            <div class="ordered-books">
+
+                {% for item in order.items.all %}
+
+                <div class="ordered-book">
+
+                    {% if item.book.image %}
+
+                        <img
+                            src="{{ item.book.image.url }}"
+                            alt="{{ item.book.title }}"
+                        >
+
+                    {% else %}
+
+                        <div class="order-no-image">
+                            No Image
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="ordered-book-info">
+
+                        <h3>{{ item.book.title }}</h3>
+
+                        <p>
+                            by {{ item.book.author }}
+                        </p>
+
+                        <span>
+                            Quantity: {{ item.quantity }}
+                        </span>
+
+                    </div>
+
+
+                    <strong>
+                        ₹{{ item.price }}
+                    </strong>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- Order Total -->
+
+            <div class="order-footer">
+
+                <span>
+                    Total Amount
+                </span>
+
+                <strong>
+                    ₹{{ order.total_amount }}
+                </strong>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+        <div class="empty-orders">
+
+            <i class="fa-solid fa-box-open"></i>
+
+            <h2>No Orders Yet</h2>
+
+            <p>
+                You haven't placed any orders yet.
+            </p>
+
+            <a href="{% url 'books' %}">
+                Browse Books
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

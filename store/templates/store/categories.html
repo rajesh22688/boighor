@@ -1,0 +1,54 @@
+{% extends "store/base.html" %}
+
+{% block title %}Categories - Boighor{% endblock %}
+
+{% block content %}
+
+<section class="categories-page">
+
+    <div class="categories-header">
+        <h1>Book Categories</h1>
+        <p>Explore books from different categories</p>
+    </div>
+
+    <div class="category-grid">
+
+        {% for category in categories %}
+
+        <div class="category-card">
+
+            <div class="category-icon">
+                <i class="fas fa-book"></i>
+            </div>
+
+            <h2>{{ category.name }}</h2>
+
+            {% if category.description %}
+                <p>{{ category.description }}</p>
+            {% else %}
+                <p>Explore books from {{ category.name }}.</p>
+            {% endif %}
+
+            <a
+                href="{% url 'books' %}?category={{ category.id }}"
+                class="category-btn"
+            >
+                View Books
+            </a>
+
+        </div>
+
+        {% empty %}
+
+        <div class="no-categories">
+            <h2>No categories available</h2>
+            <p>Please add categories from the Django Admin.</p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "store/base.html" %}
+
+{% block title %}My Wishlist - Boighor{% endblock %}
+
+{% block content %}
+
+<div class="wishlist-page">
+
+    <div class="wishlist-header">
+        <h1>My Wishlist</h1>
+        <p>Your saved books.</p>
+    </div>
+
+
+    {% if wishlist_items %}
+
+    <div class="wishlist-grid">
+
+        {% for item in wishlist_items %}
+
+        <div class="wishlist-card">
+
+            <div class="wishlist-image">
+
+                {% if item.book.image %}
+
+                    <img
+                        src="{{ item.book.image.url }}"
+                        alt="{{ item.book.title }}"
+                    >
+
+                {% else %}
+
+                    <div class="wishlist-no-image">
+                        No Image
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="wishlist-content">
+
+                <span>
+                    {{ item.book.category.name }}
+                </span>
+
+                <h3>{{ item.book.title }}</h3>
+
+                <p>by {{ item.book.author }}</p>
+
+                <strong>
+                    ₹{{ item.book.price }}
+                </strong>
+
+
+                <div class="wishlist-actions">
+
+                    <a
+                        href="{% url 'add_to_cart' item.book.id %}"
+                        class="wishlist-cart"
+                    >
+                        Add to Cart
+                    </a>
+
+                    <a
+                        href="{% url 'remove_from_wishlist' item.id %}"
+                        class="wishlist-remove"
+                    >
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-wishlist">
+
+        <i class="fa-regular fa-heart"></i>
+
+        <h2>Your Wishlist is Empty</h2>
+
+        <p>
+            Save books you want to read later.
+        </p>
+
+        <a href="{% url 'books' %}">
+            Browse Books
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

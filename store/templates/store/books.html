@@ -1,0 +1,309 @@
+{% extends "store/base.html" %}
+
+{% block title %}
+Books - Boighor
+{% endblock %}
+
+
+{% block content %}
+
+<section class="books-header">
+
+    <div>
+
+        <p class="page-label">
+            BOIGHOR COLLECTION
+        </p>
+
+        <h1>
+            Explore Our Books
+        </h1>
+
+        <p>
+            Discover your next great read from our collection.
+        </p>
+
+    </div>
+
+</section>
+
+
+<div class="books-page">
+
+
+    <!-- ================= FILTER BAR ================= -->
+
+    <div class="filter-bar">
+
+        <form method="GET"
+              action="{% url 'books' %}"
+              class="filter-form">
+
+
+            <!-- SEARCH -->
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search books or authors..."
+                    value="{{ search_query }}"
+                >
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <select name="category">
+
+                <option value="">
+                    All Categories
+                </option>
+
+                {% for category in categories %}
+
+                    <option
+                        value="{{ category.id }}"
+                        {% if selected_category == category.id|stringformat:"s" %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ category.name }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <!-- SORT -->
+
+            <select name="sort">
+
+                <option value="">
+                    Sort By
+                </option>
+
+                <option
+                    value="name"
+                    {% if selected_sort == "name" %}
+                        selected
+                    {% endif %}
+                >
+                    Name
+                </option>
+
+                <option
+                    value="price_low"
+                    {% if selected_sort == "price_low" %}
+                        selected
+                    {% endif %}
+                >
+                    Price: Low to High
+                </option>
+
+                <option
+                    value="price_high"
+                    {% if selected_sort == "price_high" %}
+                        selected
+                    {% endif %}
+                >
+                    Price: High to Low
+                </option>
+
+                <option
+                    value="newest"
+                    {% if selected_sort == "newest" %}
+                        selected
+                    {% endif %}
+                >
+                    Newest
+                </option>
+
+            </select>
+
+
+            <button type="submit"
+                    class="filter-button">
+
+                Apply
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+
+    <!-- ================= RESULTS ================= -->
+
+    <div class="books-top">
+
+        <h2>
+            {% if search_query %}
+
+                Search results for "{{ search_query }}"
+
+            {% else %}
+
+                All Books
+
+            {% endif %}
+        </h2>
+
+
+        <span>
+            {{ books|length }} books
+        </span>
+
+    </div>
+
+
+    {% if books %}
+
+
+    <!-- ================= BOOK GRID ================= -->
+
+    <div class="book-grid">
+
+        {% for book in books %}
+
+        <div class="book-card">
+
+
+            <!-- IMAGE -->
+
+            <div class="book-image">
+
+                {% if book.image %}
+
+                    <img
+                        src="{{ book.image.url }}"
+                        alt="{{ book.title }}"
+                    >
+
+                {% else %}
+
+                    <div class="no-image">
+
+                        <i class="fa-solid fa-book"></i>
+
+                        <span>
+                            No Cover
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="book-info">
+
+
+                <p class="book-category">
+
+                    {{ book.category.name }}
+
+                </p>
+
+
+                <h3>
+
+                    {{ book.title }}
+
+                </h3>
+
+
+                <p class="book-author">
+
+                    By {{ book.author }}
+
+                </p>
+
+
+                {% if book.language %}
+
+                <p class="book-language">
+
+                    <i class="fa-solid fa-language"></i>
+
+                    {{ book.language }}
+
+                </p>
+
+                {% endif %}
+
+
+                <div class="book-bottom">
+
+
+                    <strong>
+
+                        ₹{{ book.price }}
+
+                    </strong>
+
+
+                    <a href="{% url 'book_detail' book.id %}" class="view-details-btn">
+    View
+</a>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+
+
+    <!-- ================= NO RESULTS ================= -->
+
+    <div class="no-results">
+
+        <i class="fa-solid fa-book-open"></i>
+
+        <h2>
+            No Books Found
+        </h2>
+
+        <p>
+            Try another search or category.
+        </p>
+
+        <a
+            href="{% url 'books' %}"
+            class="clear-button"
+        >
+
+            View All Books
+
+        </a>
+
+    </div>
+
+
+    {% endif %}
+
+
+</div>
+
+{% endblock %}

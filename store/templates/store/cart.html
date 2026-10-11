@@ -1,0 +1,183 @@
+{% extends "store/base.html" %}
+
+{% block title %}My Cart - Boighor{% endblock %}
+
+{% block content %}
+
+<div class="cart-page">
+
+    <div class="cart-header">
+        <h1>My Cart</h1>
+        <p>Review your selected books before checkout.</p>
+    </div>
+
+
+    {% if cart_items %}
+
+    <div class="cart-layout">
+
+        <!-- Cart Items -->
+
+        <div class="cart-items">
+
+            {% for item in cart_items %}
+
+            <div class="cart-item">
+
+                <!-- Image -->
+
+                <div class="cart-item-image">
+
+                    {% if item.book.image %}
+
+                    <img
+                        src="{{ item.book.image.url }}"
+                        alt="{{ item.book.title }}"
+                    >
+
+                    {% else %}
+
+                    <div class="cart-no-image">
+                        No Image
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Details -->
+
+                <div class="cart-item-details">
+
+                    <h3>{{ item.book.title }}</h3>
+
+                    <p>by {{ item.book.author }}</p>
+
+                    <span class="cart-category">
+                        {{ item.book.category.name }}
+                    </span>
+
+                    <div class="cart-price">
+                        ₹{{ item.book.price }}
+                    </div>
+
+                </div>
+
+
+                <!-- Quantity -->
+
+                <div class="cart-quantity">
+
+                    <form
+                        method="POST"
+                        action="{% url 'update_cart' item.id %}"
+                    >
+
+                        {% csrf_token %}
+
+                        <label>Quantity</label>
+
+                        <div class="quantity-control">
+
+                            <input
+                                type="number"
+                                name="quantity"
+                                value="{{ item.quantity }}"
+                                min="1"
+                            >
+
+                            <button type="submit">
+                                Update
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- Item Total -->
+
+                <div class="cart-item-total">
+
+                    <strong>
+                        ₹{% widthratio item.book.price 1 item.quantity %}
+                    </strong>
+
+                    <a
+                        href="{% url 'remove_from_cart' item.id %}"
+                        class="remove-cart"
+                    >
+                        <i class="fa-solid fa-trash"></i>
+                        Remove
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- Summary -->
+
+        <div class="cart-summary">
+
+            <h2>Order Summary</h2>
+
+            <div class="summary-row">
+                <span>Items</span>
+                <span>{{ cart_items|length }}</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Delivery</span>
+                <span class="free-text">FREE</span>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-total">
+                <span>Total</span>
+                <strong>₹{{ grand_total }}</strong>
+            </div>
+
+            <a
+                href="{% url 'checkout' %}"
+                class="checkout-btn">
+                Proceed to Checkout
+            </a>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <!-- Empty Cart -->
+
+    <div class="empty-cart">
+
+        <i class="fa-solid fa-cart-shopping"></i>
+
+        <h2>Your Cart is Empty</h2>
+
+        <p>
+            You haven't added any books to your cart yet.
+        </p>
+
+        <a href="{% url 'books' %}" class="continue-shopping">
+            Browse Books
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
